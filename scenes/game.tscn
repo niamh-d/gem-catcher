@@ -1,0 +1,49 @@
+[gd_scene load_steps=7 format=3 uid="uid://gk4uhcv1e3vn"]
+
+[ext_resource type="Texture2D" uid="uid://krarpx5rvy3o" path="res://assets/GameBg.png" id="1_76mbj"]
+[ext_resource type="Script" path="res://scenes/game.gd" id="1_ad4i7"]
+[ext_resource type="PackedScene" uid="uid://bp50vfgdxxhwv" path="res://scenes/paddle.tscn" id="2_h8hwx"]
+[ext_resource type="PackedScene" uid="uid://dnrynroxc7ivk" path="res://scenes/gem.tscn" id="3_0ap1b"]
+[ext_resource type="AudioStream" uid="uid://clu2etnlufxnt" path="res://assets/bgm_action_5.mp3" id="5_sb35h"]
+[ext_resource type="AudioStream" uid="uid://cnvmucrgpvvvf" path="res://assets/spell1_0.wav" id="6_jfd6c"]
+
+[node name="Game" type="Node2D"]
+script = ExtResource("1_ad4i7")
+gem_scene = ExtResource("3_0ap1b")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(568, 327)
+scale = Vector2(0.7, 0.7)
+texture = ExtResource("1_76mbj")
+
+[node name="Paddle" parent="." instance=ExtResource("2_h8hwx")]
+position = Vector2(566, 575)
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 2.0
+autostart = true
+
+[node name="Label" type="Label" parent="."]
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 134.0
+offset_bottom = 91.0
+theme_override_colors/font_color = Color(0.530509, 0.0607369, 0.446445, 1)
+theme_override_colors/font_shadow_color = Color(0.668404, 0.618063, 0.706146, 1)
+theme_override_colors/font_outline_color = Color(0.268744, 0.395287, 0.615389, 1)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+theme_override_constants/outline_size = 2
+theme_override_font_sizes/font_size = 48
+text = "00000"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_sb35h")
+volume_db = -16.58
+autoplay = true
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_jfd6c")
+
+[connection signal="area_entered" from="Paddle" to="." method="_on_paddle_area_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
